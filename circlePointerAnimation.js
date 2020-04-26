@@ -14,12 +14,14 @@ var circlePointerAnimation = {
     largestPosiibleStroke: 5,
   },
 };
-window.addEventListener("load", init);
-function init(e) {
+window.addEventListener("load", circlePointerAnimationInit);
+function circlePointerAnimationInit(e) {
   //creating a canvas element and setting its required attributes and style **Adding to body**
   //prarent
   circlePointerAnimation.parentDIV = document.createElement("div");
   circlePointerAnimation.parentDIV.style.position = "absolute";
+  circlePointerAnimation.parentDIV.style.top = "0px";
+  circlePointerAnimation.parentDIV.style.left = "0px";
   circlePointerAnimation.parentDIV.style.width = "100%";
   circlePointerAnimation.parentDIV.style.height = "100%";
   circlePointerAnimation.parentDIV.style.pointerEvents = "none";
@@ -42,11 +44,11 @@ function init(e) {
   circlePointerAnimation.ctx = circlePointerAnimation.canvas.getContext("2d");
   circlePointerAnimation.mouseX = e.clientX;
   circlePointerAnimation.mouseY = e.clientY;
-  pointerAnimation();
+  circlePointerAnimation_pointerAnimation();
 }
 //create a circle every time the mouse moves
-window.addEventListener("mousemove", updatePointer);
-function updatePointer(e) {
+window.addEventListener("mousemove", circlePointerAnimation_updatePointer);
+function circlePointerAnimation_updatePointer(e) {
   circlePointerAnimation.mouseX = e.clientX;
   circlePointerAnimation.mouseY = e.clientY;
   var dx = (Math.random() - 0.5) * 5;
@@ -63,7 +65,7 @@ function updatePointer(e) {
       )
     ];
   circlePointerAnimation.circleList.push(
-    new Circle(
+    new CirclePointerAnimation_Circle(
       circlePointerAnimation.mouseX,
       circlePointerAnimation.mouseY,
       dx,
@@ -74,7 +76,15 @@ function updatePointer(e) {
     )
   );
 }
-function Circle(x, y, dx, dy, maxRadius, color, lineWidth) {
+function CirclePointerAnimation_Circle(
+  x,
+  y,
+  dx,
+  dy,
+  maxRadius,
+  color,
+  lineWidth
+) {
   this.x = x;
   this.y = y;
   this.dx = dx;
@@ -99,8 +109,8 @@ function Circle(x, y, dx, dy, maxRadius, color, lineWidth) {
   };
 }
 
-function pointerAnimation() {
-  requestAnimationFrame(pointerAnimation);
+function circlePointerAnimation_pointerAnimation() {
+  requestAnimationFrame(circlePointerAnimation_pointerAnimation);
   circlePointerAnimation.ctx.clearRect(
     0,
     0,
