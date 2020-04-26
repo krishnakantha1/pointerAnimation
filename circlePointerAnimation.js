@@ -14,8 +14,8 @@ var circlePointerAnimation = {
     largestPosiibleStroke: 5,
   },
 };
-window.addEventListener("load", circlePointerAnimationInit);
-function circlePointerAnimationInit(e) {
+window.addEventListener("load", circlePointerAnimation_init);
+function circlePointerAnimation_init(e) {
   //creating a canvas element and setting its required attributes and style **Adding to body**
   //prarent
   circlePointerAnimation.parentDIV = document.createElement("div");
