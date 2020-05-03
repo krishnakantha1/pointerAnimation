@@ -4,7 +4,7 @@ var circlePointerAnimation = {
   ctx: undefined,
   canvas: undefined,
   canvasID: "circlePointerAnimation",
-  canvasZIndex: 2,
+  canvasZIndex: 10,
   circleList: [],
   mouseX: undefined,
   mouseY: undefined,
@@ -14,12 +14,46 @@ var circlePointerAnimation = {
     largestPosiibleStroke: 5,
   },
 };
+
+//circle object
+class CirclePointerAnimation_Circle {
+  constructor(x, y, dx, dy, maxRadius, color, lineWidth) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = 1;
+    this.maxRadius = maxRadius;
+    this.lineWidth = lineWidth;
+    this.color = color;
+    this.draw = function () {
+      circlePointerAnimation.ctx.beginPath();
+      circlePointerAnimation.ctx.strokeStyle = this.color;
+      circlePointerAnimation.ctx.lineWidth = this.lineWidth;
+      circlePointerAnimation.ctx.arc(
+        this.x,
+        this.y,
+        this.radius,
+        0,
+        Math.PI * 2
+      );
+      circlePointerAnimation.ctx.stroke();
+
+      this.update();
+    };
+    this.update = function () {
+      this.x += this.dx;
+      this.y += this.dy;
+      this.radius += 1;
+    };
+  }
+}
 window.addEventListener("load", circlePointerAnimation_init);
 function circlePointerAnimation_init(e) {
   //creating a canvas element and setting its required attributes and style **Adding to body**
   //prarent
   circlePointerAnimation.parentDIV = document.createElement("div");
-  circlePointerAnimation.parentDIV.style.position = "absolute";
+  circlePointerAnimation.parentDIV.style.position = "fixed";
   circlePointerAnimation.parentDIV.style.top = "0px";
   circlePointerAnimation.parentDIV.style.left = "0px";
   circlePointerAnimation.parentDIV.style.width = "100%";
@@ -76,39 +110,8 @@ function circlePointerAnimation_updatePointer(e) {
     )
   );
 }
-function CirclePointerAnimation_Circle(
-  x,
-  y,
-  dx,
-  dy,
-  maxRadius,
-  color,
-  lineWidth
-) {
-  this.x = x;
-  this.y = y;
-  this.dx = dx;
-  this.dy = dy;
-  this.radius = 1;
-  this.maxRadius = maxRadius;
-  this.lineWidth = lineWidth;
-  this.color = color;
-  this.draw = function () {
-    circlePointerAnimation.ctx.beginPath();
-    circlePointerAnimation.ctx.strokeStyle = this.color;
-    circlePointerAnimation.ctx.lineWidth = this.lineWidth;
-    circlePointerAnimation.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    circlePointerAnimation.ctx.stroke();
 
-    this.update();
-  };
-  this.update = function () {
-    this.x += this.dx;
-    this.y += this.dy;
-    this.radius += 1;
-  };
-}
-
+//animation loop
 function circlePointerAnimation_pointerAnimation() {
   requestAnimationFrame(circlePointerAnimation_pointerAnimation);
   circlePointerAnimation.ctx.clearRect(
